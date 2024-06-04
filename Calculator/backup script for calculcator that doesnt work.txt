@@ -1,0 +1,228 @@
+using Godot;
+using System;
+using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+
+public partial class CalculatorScene : Control {
+	//Sets up some values/lists for use throughout the script.
+	string currentValue = "";
+	float newNumber = 0;
+	float previousResult = 0;
+	Label resultLabel;
+	Label logicLabel;
+	List<float> savedNumbers = new List<float>();
+	List<char> savedOperators = new List<char>();
+	List<char> calculatorOperators = new List<char>(new char[] {'/', 'x', '+', '-'});
+
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		resultLabel = GetNode<Label>("Panel/MarginContainer/VBoxContainer/LabelResult");
+		logicLabel = GetNode<Label>("Panel/MarginContainer/VBoxContainer/LabelLogic");
+		GD.Print("The Thing has loaded I guess");
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta) {
+		
+	}
+
+	private void _on_button_neg_pressed() {
+		//User pressed the +/- button, turns the current value into a positive/negative.
+		GD.Print("You Pressed The +/- Button");
+		if (currentValue[0] != '-') {
+			currentValue = "-" + currentValue;
+			resultLabel.Text = (currentValue);
+		} else {
+			currentValue = currentValue.Substring(1);
+			resultLabel.Text = (currentValue);
+		}
+	}
+
+	private void _on_button_clear_pressed() {
+		//User pressed the Clear button, clears lists and display to reset the calculator.
+		GD.Print("You Pressed The Clear Button");
+		currentValue = "";
+		resultLabel.Text = "";
+		logicLabel.Text = "";
+		savedNumbers.Clear();
+		savedOperators.Clear();
+	}
+
+	private void _on_button_divide_pressed() {
+		//User pressed the Divison button.
+		GD.Print("You Pressed The / Button");
+		OperatorPressed(currentValue, '/');
+	}
+
+	private void _on_button_multiply_pressed() {
+		//User pressed the Multiplication button.
+		GD.Print("You Pressed The x Button");
+		OperatorPressed(currentValue, 'x');
+	}
+
+	private void _on_button_plus_pressed() {
+		//User pressed the Addition button.
+		GD.Print("You Pressed The + Button");
+		OperatorPressed(currentValue, '+');
+	}
+
+	private void _on_button_minus_pressed() {
+		//User pressed the Subtract button.
+		GD.Print("You Pressed The - Button");
+		OperatorPressed(currentValue, '-');
+	}
+	
+	private void OperatorPressed(string number1, char operator1) {
+		//Function to process values into lists and display them.
+		GD.Print("Passed to The Function");
+		if (currentValue == "") { 
+			GD.Print("It was fucking empty!");
+			return; 
+		}
+		if (logicLabel.Text == "Error!") {
+			GD.Print("Removed the error message");
+		}
+		resultLabel.Text = "";
+		logicLabel.Text = logicLabel.Text + number1 + " " + operator1 + " ";
+		savedNumbers.Add(float.Parse(number1));
+		if (operator1 != '=') {
+			savedOperators.Add(operator1);
+			}
+		currentValue = "";
+	}
+	
+	private void _on_button_equal_pressed() {
+		//User pressed the Equals button, does some checks then processes the answer.
+		GD.Print("You Pressed The = Button");
+		//Checks if input is empty, does nothing further.
+		if (currentValue == "") {
+			GD.Print("It was fucking empty!");
+			return;
+		}
+		OperatorPressed(currentValue, '=');
+		//Checks if sufficient number of numbers/operators to do a calculation, else errors and clears everything.
+		GD.Print("savedNumbers = ", savedNumbers.Count, ", savedOperators = ", savedOperators.Count);
+		if (savedNumbers.Count < 2 || savedOperators.Count < 1) {
+			logicLabel.Text = "Error!";
+			resultLabel.Text = "";
+			savedNumbers.Clear();
+			savedOperators.Clear();
+			return;
+		}
+		//Passed the checks, processes answer.
+		for(int x = 0; x < 2; x++) {
+			for(int i = 0; i < savedOperators.Count; i++) {
+				//First run, checks for Multiplication or Divison operators within savedOperators and acts upon them.
+				if(x == 0) {
+					if(savedOperators[i] == calculatorOperators[0]) {
+						GD.Print("-Divison found in Pos" + i);
+						GD.Print("--Operation used: Pos" + i + "(" + savedNumbers[i] + ") / Pos" + (i+1) + "(" + savedNumbers[i+1] + ")");
+						newNumber = savedNumbers[i] / savedNumbers[i+1];
+						savedNumbers[i] = newNumber;
+						savedNumbers[i+1] = newNumber;
+						GD.Print("---newNumbers: Pos" + i + "(" + savedNumbers[i] + "), Pos" + (i+1) + "(" + savedNumbers[i+1] + ")");
+					}
+					else if(savedOperators[i] == calculatorOperators[1]) {
+						GD.Print("-Multiplication found in Pos" + i);
+						GD.Print("--Operation used: Pos" + i + "(" + savedNumbers[i] + ") * Pos" + (i+1) + "(" + savedNumbers[i+1] + ")");
+						newNumber = savedNumbers[i] * savedNumbers[i+1];
+						savedNumbers[i] = newNumber;
+						savedNumbers[i+1] = newNumber;
+						GD.Print("---newNumbers: Pos" + i + "(" + savedNumbers[i] + "), Pos" + (i+1) + "(" + savedNumbers[i+1] + ")");
+					}
+				} 
+				//Second run, checks for Addition or Subtraction operators within savedOperators and acts upon them.
+				else if (x == 1) {
+					if(savedOperators[i] == calculatorOperators[2]) {
+						GD.Print("-Addition found in Pos" + i);
+						GD.Print("--Operation used: Pos" + i + "(" + savedNumbers[i] + ") + Pos" + (i+1) + "(" + savedNumbers[i+1] + ")");
+						newNumber = savedNumbers[i] + savedNumbers[i+1];
+						savedNumbers[i] = newNumber;
+						savedNumbers[i+1] = newNumber;
+						GD.Print("---newNumbers: Pos" + i + "(" + savedNumbers[i] + "), Pos" + (i+1) + "(" + savedNumbers[i+1] + ")");
+					}
+					else if(savedOperators[i] == calculatorOperators[3]) {
+						GD.Print("-Subtraction found in Pos" + i);
+						GD.Print("--Operation used: Pos" + i + "(" + savedNumbers[i] + ") - Pos" + (i+1) + "(" + savedNumbers[i+1] + ")");
+						newNumber = savedNumbers[i] - savedNumbers[i+1];
+						savedNumbers[i] = newNumber;
+						savedNumbers[i+1] = newNumber;
+						GD.Print("---newNumbers: Pos" + i + "(" + savedNumbers[i] + "), Pos" + (i+1) + "(" + savedNumbers[i+1] + ")");
+					}
+				}
+				else {
+					GD.Print("How the fuck did you get here");
+				}
+			}
+		}
+		resultLabel.Text = Convert.ToString(newNumber);
+		previousResult = newNumber;
+	}
+
+	private void _on_button_1_pressed() {
+		GD.Print("You Pressed Button 1");
+		currentValue = currentValue + "1";
+		resultLabel.Text = (currentValue);
+	}
+
+	private void _on_button_2_pressed() {
+		GD.Print("You Pressed Button 2");
+		currentValue = currentValue + "2";
+		resultLabel.Text = (currentValue);
+	}
+
+	private void _on_button_3_pressed() {
+		GD.Print("You Pressed Button 3");
+		currentValue = currentValue + "3";
+		resultLabel.Text = (currentValue);
+	}
+
+	private void _on_button_4_pressed() {
+		GD.Print("You Pressed Button 4");
+		currentValue = currentValue + "4";
+		resultLabel.Text = (currentValue);
+	}
+
+	private void _on_button_5_pressed() {
+		GD.Print("You Pressed Button 5");
+		currentValue = currentValue + "5";
+		resultLabel.Text = (currentValue);
+	}
+
+	private void _on_button_6_pressed() {
+		GD.Print("You Pressed Button 6");
+		currentValue = currentValue + "6";
+		resultLabel.Text = (currentValue);
+	}
+
+	private void _on_button_7_pressed() {
+		GD.Print("You Pressed Button 7");
+		currentValue = currentValue + "7";
+		resultLabel.Text = (currentValue);
+	}
+
+	private void _on_button_8_pressed() {
+		GD.Print("You Pressed Button 8");
+		currentValue = currentValue + "8";
+		resultLabel.Text = (currentValue);
+	}
+
+	private void _on_button_9_pressed() {
+		GD.Print("You Pressed Button 9");
+		currentValue = currentValue + "9";
+		resultLabel.Text = (currentValue);
+	}
+
+	private void _on_button_0_pressed() {
+		GD.Print("You Pressed Button 0");
+		currentValue = currentValue + "0";
+		resultLabel.Text = (currentValue);
+	}
+
+	private void _on_button_decimal_pressed() {
+		GD.Print("You Pressed Button .");
+		currentValue = currentValue + ".";
+		resultLabel.Text = (currentValue);
+	}
+}

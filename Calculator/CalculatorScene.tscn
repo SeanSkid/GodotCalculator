@@ -1,0 +1,236 @@
+[gd_scene load_steps=9 format=3 uid="uid://ded2kopim2s48"]
+
+[ext_resource type="Theme" uid="uid://cjjek6kj7kweu" path="res://ButtonStyleA.tres" id="1_0q3wy"]
+[ext_resource type="Script" path="res://CalculatorScene.cs" id="1_da5eb"]
+[ext_resource type="Theme" uid="uid://cf0jo8ar8fs0t" path="res://ButtonStyleC.tres" id="2_e5vnj"]
+[ext_resource type="Theme" uid="uid://bh1tmhbimhyd7" path="res://ButtonStyleB.tres" id="3_i8vf0"]
+
+[sub_resource type="Theme" id="Theme_aw5af"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_doqhp"]
+bg_color = Color(0.0901961, 0.105882, 0.129412, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.713726, 0.713726, 0.713726, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_n51uo"]
+color = Color(0, 0.376471, 0.901961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c3pak"]
+bg_color = Color(0.105882, 0.12549, 0.164706, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_aw5af")
+script = ExtResource("1_da5eb")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = -134.0
+offset_right = 74.0
+offset_bottom = 134.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_doqhp")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="LabelTitle" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "My Calculator"
+
+[node name="HSeparatorTitle" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_n51uo")
+
+[node name="LabelResult" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 2
+
+[node name="LabelLogic" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.607843, 0.607843, 0.607843, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_c3pak")
+horizontal_alignment = 2
+
+[node name="HBoxContainer1" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonClear" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer1"]
+custom_minimum_size = Vector2(64, 30)
+layout_direction = 1
+layout_mode = 2
+theme = ExtResource("1_0q3wy")
+text = "Clear"
+
+[node name="ButtonNeg" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer1"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("1_0q3wy")
+text = "+/-"
+
+[node name="ButtonDivide" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer1"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("2_e5vnj")
+text = "/"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button7" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("3_i8vf0")
+text = "7"
+
+[node name="Button8" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("3_i8vf0")
+text = "8"
+
+[node name="Button9" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("3_i8vf0")
+text = "9"
+
+[node name="ButtonMultiply" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("2_e5vnj")
+text = "x"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button4" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("3_i8vf0")
+text = "4"
+
+[node name="Button5" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("3_i8vf0")
+text = "5"
+
+[node name="Button6" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("3_i8vf0")
+text = "6"
+
+[node name="ButtonMinus" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("2_e5vnj")
+text = "-"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button1" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("3_i8vf0")
+text = "1"
+
+[node name="Button2" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("3_i8vf0")
+text = "2"
+
+[node name="Button3" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("3_i8vf0")
+text = "3"
+
+[node name="ButtonPlus" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("2_e5vnj")
+text = "+"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonDecimal" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("3_i8vf0")
+text = "."
+
+[node name="Button0" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme = ExtResource("3_i8vf0")
+text = "0"
+
+[node name="ButtonEqual" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(64, 30)
+layout_mode = 2
+theme = ExtResource("2_e5vnj")
+text = "="
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer1/ButtonClear" to="." method="_on_button_clear_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer1/ButtonNeg" to="." method="_on_button_neg_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer1/ButtonDivide" to="." method="_on_button_divide_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer2/Button7" to="." method="_on_button_7_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer2/Button8" to="." method="_on_button_8_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer2/Button9" to="." method="_on_button_9_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer2/ButtonMultiply" to="." method="_on_button_multiply_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer3/Button4" to="." method="_on_button_4_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer3/Button5" to="." method="_on_button_5_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer3/Button6" to="." method="_on_button_6_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer3/ButtonMinus" to="." method="_on_button_minus_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer4/Button1" to="." method="_on_button_1_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer4/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer4/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer4/ButtonPlus" to="." method="_on_button_plus_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer5/ButtonDecimal" to="." method="_on_button_decimal_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer5/Button0" to="." method="_on_button_0_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer5/ButtonEqual" to="." method="_on_button_equal_pressed"]
